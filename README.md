@@ -1,0 +1,1 @@
+This project is for creating real estate application
