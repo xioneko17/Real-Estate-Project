@@ -1,4 +1,5 @@
 import { ErrorHandler } from "../utils/error.js";
+import cloudinary from './config/cloudinary.js'
 
 /**
  * CRUD MAIN CONTROLLER where other controllers inherit or override pre-defined and existing properties
@@ -126,6 +127,17 @@ export default class CoreController {
       res.status(200).json({ message: `Successfully deleted` });
     } catch (error) {
       throw new ErrorHandler(error.statusCode, error.message);
+    }
+  }
+
+  async upload(req, res, next){
+    try {
+      const file = req.files.image;
+
+      const result = await cloudinary.uploader.upload(file.tempFilePath);
+      res.json(result);
+    } catch (error){
+      res.status(500).send(error);
     }
   }
 
